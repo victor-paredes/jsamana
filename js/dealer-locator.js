@@ -264,10 +264,15 @@ const DealerLocator = {
     this.updateDealerList();
     this.updateMapMarkers();
     
-    // Reset map view to default
+    // Reset map view to default (using responsive config)
     if (this.map) {
-      this.map.setCenter(window.mapConfig?.defaultCenter || { lat: 30.2689191, lng: -81.6196011 });
-      this.map.setZoom(window.mapConfig?.defaultZoom || 11);
+      console.log('Reset clicked - window.innerWidth:', window.innerWidth);
+      console.log('getResponsiveMapConfig available:', typeof window.getResponsiveMapConfig);
+      const responsiveConfig = window.getResponsiveMapConfig ? window.getResponsiveMapConfig() : window.mapConfig;
+      console.log('Config being used:', responsiveConfig);
+      this.map.setCenter(responsiveConfig?.defaultCenter || { lat: 30.2689191, lng: -81.6196011 });
+      this.map.setZoom(responsiveConfig?.defaultZoom || 11);
+      console.log('Map center set to:', responsiveConfig?.defaultCenter, 'zoom:', responsiveConfig?.defaultZoom);
     }
     
     // Deselect any active dealer items
@@ -291,13 +296,6 @@ const DealerLocator = {
       this.initMap();
     };
 
-    /* TODO Erase this block. This code isn't being used. 
-    // Load Google Maps API
-    const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCOVi1aU78VRHXyfUiDAWfXluIUta_fIxc&callback=initDealerMap';
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);   */
   }
 };
 
