@@ -117,7 +117,7 @@
    ============================================================================= */
 @media (max-width: 768px) {
   .glide__slide {
-    padding-top: 0.5rem;
+    padding-top: 2rem;
   }
   
   .slide-text {
