@@ -116,6 +116,7 @@
    MOBILE RESPONSIVE - SLIDE TEXT
    ============================================================================= */
 @media (max-width: 768px) {
+
   .glide__slide {
     padding-top: 2rem;
   }
@@ -141,6 +142,9 @@
     flex-direction: column;
     text-align: center;
     padding: 0 1rem 1rem 1rem;
+  }
+  .slide-image img {
+    max-width: 80%;
   }
   
 
