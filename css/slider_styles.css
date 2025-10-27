@@ -3,9 +3,7 @@
    HERO SLIDER
    ============================================================================= */
 .hero-slider {
-  min-height: 250px;
-  max-height: 45vh;
-  height: auto;
+  height: 45vh;
   padding: 0;
   margin: 0;
 }
@@ -16,10 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
-  max-height: 45vh;
-  height: auto;
-  padding: 2rem 0;
+  height: 45vh;
 }
 
 .slide-content {
@@ -124,19 +119,13 @@
    ============================================================================= */
 @media (max-width: 768px) {
   .hero-slider {
-    min-height: 200px;
-    max-height: 60vh;
-    height: auto;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .glide__slide {
-    min-height: 200px;
-    max-height: 60vh;
-    height: auto;
-    padding: 1.5rem 0;
-  }
+  height: 55vh;
+  padding: 0;
+  margin: 0;
+}
+.glide__slide {
+  height: 55vh;
+}
   .slide-text {
     text-align: center;
     padding: 0 !important;
