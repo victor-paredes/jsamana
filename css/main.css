@@ -430,18 +430,5 @@ footer a {
 }
 
 
-  .slide-content {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-  
-  .slide-text {
-    padding-right: 0;
-  }
-  
-  .glide__arrow {
-    font-size: 16px;
-    padding: 10px 12px;
-  }
+
 }

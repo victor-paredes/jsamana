@@ -171,6 +171,31 @@ $(function() {
 });
 </script>
 <script>
+// Function to equalize slide heights
+function equalizeSlideHeights() {
+  const slides = document.querySelectorAll('.glide__slide');
+  if (slides.length === 0) return;
+  
+  // Reset heights first
+  slides.forEach(slide => {
+    slide.style.height = 'auto';
+  });
+  
+  // Find the tallest slide
+  let maxHeight = 0;
+  slides.forEach(slide => {
+    const slideHeight = slide.offsetHeight;
+    if (slideHeight > maxHeight) {
+      maxHeight = slideHeight;
+    }
+  });
+  
+  // Set all slides to the same height
+  slides.forEach(slide => {
+    slide.style.height = maxHeight + 'px';
+  });
+}
+
 // Initialize Glide.js slider
 const glide = new Glide('.hero-slider', {
   type: 'carousel',
@@ -181,6 +206,18 @@ const glide = new Glide('.hero-slider', {
 
 document.addEventListener('DOMContentLoaded', function() {
   glide.mount();
+  
+  // Equalize heights after mounting
+  setTimeout(() => {
+    equalizeSlideHeights();
+  }, 100);
+  
+  // Re-equalize on window resize
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      equalizeSlideHeights();
+    }, 100);
+  });
 });
 </script>
 <script>
