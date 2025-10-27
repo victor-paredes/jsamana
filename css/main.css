@@ -422,6 +422,14 @@ footer a {
     padding: 0 1rem;
   }
   
+.top-bar {
+  text-align: center;
+}
+.top-bar img {
+  width: 100px;
+}
+
+
   .slide-content {
     flex-direction: column;
     text-align: center;
