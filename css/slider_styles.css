@@ -122,6 +122,7 @@
   .slide-text {
     text-align: center;
     padding: 0 !important;
+    flex: 0.5;
   }
   
   .slide-text h2 {
