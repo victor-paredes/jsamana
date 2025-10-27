@@ -118,10 +118,12 @@
   .slide-text h2 {
     text-align: center;
     font-size: 1.5rem;
+    line-height: 1.7rem;
   }
   
   .slide-text p {
     font-size: 0.9rem;
+    line-height: 1.2rem;
   }
 }
 
