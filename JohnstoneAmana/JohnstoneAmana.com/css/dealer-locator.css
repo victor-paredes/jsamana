@@ -1,0 +1,645 @@
+/* =============================================================================
+   CSS VARIABLES
+   ============================================================================= */
+:root {
+  /* Brand Colors */
+  --gb-googlemap-primary: var(--brand-primary);
+  --gb-googlemap-primary-dark: var(--brand-secondary);
+  
+  /* Map Pin Colors */
+  --gb-googlemap-pin-default: var(--brand-primary);
+  --gb-googlemap-pin-default-border: var(--brand-secondary);
+  --gb-googlemap-pin-selected: #ff0000;
+  --gb-googlemap-pin-selected-border: var(--brand-primary);
+  
+  /* Text Colors */
+  --gb-googlemap-text-primary: #222;
+  --gb-googlemap-text-secondary: #666;
+  --gb-googlemap-text-light: #fff;
+  
+  /* Background Colors */
+  --gb-googlemap-bg-white: #fff;
+  --gb-googlemap-bg-light: #f8f9fa;
+  
+  /* Border Colors */
+  --gb-googlemap-border-light: #eee;
+  --gb-googlemap-border-gray: #e5e7eb;
+
+  /* Shadow Values */
+  --gb-googlemap-shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+  --gb-googlemap-shadow-medium: 0 4px 10px rgba(0,0,0,0.1);
+  --gb-googlemap-shadow-heavy: 10px 10px 5px rgba(0, 0, 0, 0.2);
+  --gb-googlemap-shadow-basic: rgba(0,0,0,0.1);
+  
+  /* Radius Values */
+  --gb-googlemap-radius-xs: 0.25rem;
+  --gb-googlemap-radius-sm: 3px;
+  --gb-googlemap-radius-md: 4px;
+  --gb-googlemap-radius-lg: 6px;
+  --gb-googlemap-radius-xl: 8px;
+  --gb-googlemap-radius-round: 50%;
+  --gb-googlemap-radius-pill: 1rem;
+  
+  /* Spacing Values */
+  --gb-googlemap-space-xs: 0.25rem;
+  --gb-googlemap-space-sm: 0.5rem;
+  --gb-googlemap-space-md: 1rem;
+  --gb-googlemap-space-lg: 1.5rem;
+  --gb-googlemap-space-xl: 2rem;
+  
+  /* Size Values */
+  --gb-googlemap-height-map: 600px;
+  --gb-googlemap-height-mobile: 300px;
+  --gb-googlemap-height-mobile-sidebar: 400px;
+  --gb-googlemap-height-list: 500px;
+  
+  /* Border Widths */
+  --gb-googlemap-border-thin: 1px;
+  --gb-googlemap-border-thick: 2px;
+  
+  /* Font Sizes */
+  --gb-googlemap-font-xs: 0.7rem;
+  --gb-googlemap-font-sm: 0.75rem;
+  --gb-googlemap-font-md: 0.8rem;
+  --gb-googlemap-font-base: 0.875rem;
+  --gb-googlemap-font-lg: 0.9rem;
+  --gb-googlemap-font-xl: 0.95rem;
+  --gb-googlemap-font-2xl: 1rem;
+  --gb-googlemap-font-3xl: 1.1rem;
+  --gb-googlemap-font-4xl: 1.2rem;
+  
+  /* Transitions */
+  --gb-googlemap-transition-fast: all 0.2s ease;
+  --gb-googlemap-transition-normal: all 0.3s ease;
+  --gb-googlemap-transition-border: border-color 0.2s ease;
+}
+
+/* =============================================================================
+   MAP & LOCATIONS SECTION
+   ============================================================================= */
+
+
+   /* Ensure proper spacing for the locations section */
+#locations {
+  padding: 4rem 2rem; /* Extra bottom padding */
+  max-width: 1800px;
+}
+#locations h2 {
+  border: solid var(--brand-primary);
+  border-width: 0 0 5px 0;
+
+}
+
+@media (max-width: 768px) {
+  #locations {
+    padding: 1rem; /* All sides 1rem on mobile */
+  }
+}
+   .map-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: var(--gb-googlemap-space-xl);
+  height: var(--gb-googlemap-height-map);
+  margin-top: var(--gb-googlemap-space-xl);
+}
+
+.map-sidebar {
+  background: var(--gb-googlemap-bg-white);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-xl);
+  padding: var(--gb-googlemap-space-lg);
+  overflow-y: auto;
+}
+
+.location-info {
+  margin-bottom: var(--gb-googlemap-space-xl);
+  padding-bottom: var(--gb-googlemap-space-lg);
+  border-bottom: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+}
+
+.location-info h3 {
+  color: var(--gb-googlemap-primary);
+  margin-bottom: var(--gb-googlemap-space-md);
+}
+
+.locations-list h4 {
+  color: var(--gb-googlemap-text-primary);
+  margin-bottom: var(--gb-googlemap-space-md);
+  font-size: var(--gb-googlemap-font-4xl);
+}
+
+.location-item {
+  padding: var(--gb-googlemap-space-md);
+  margin-bottom: var(--gb-googlemap-space-sm);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-lg);
+  cursor: pointer;
+  transition: var(--gb-googlemap-transition-normal);
+}
+
+.location-item:hover {
+  background-color: var(--gb-googlemap-bg-light);
+  border-color: var(--gb-googlemap-primary);
+}
+
+.location-item.active {
+  background-color: var(--gb-googlemap-primary);
+  color: var(--gb-googlemap-text-light);
+  border-color: var(--gb-googlemap-primary);
+}
+
+.location-item h5 {
+  margin: 0 0 var(--gb-googlemap-space-sm) 0;
+  font-size: var(--gb-googlemap-font-3xl);
+}
+
+.location-item p {
+  margin: 0;
+  font-size: var(--gb-googlemap-font-lg);
+  line-height: 1.4;
+}
+
+.map-wrapper {
+  border-radius: var(--gb-googlemap-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--gb-googlemap-shadow-light);
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  min-height: var(--gb-googlemap-height-map);
+}
+
+.selected-location {
+  background: var(--gb-googlemap-bg-light);
+
+  border-radius: var(--gb-googlemap-radius-lg);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+}
+
+.selected-location h4 {
+  color: var(--gb-googlemap-primary);
+}
+
+.selected-location p {
+  margin-bottom: var(--gb-googlemap-space-sm);
+  font-size: var(--gb-googlemap-font-xl);
+}
+
+.selected-location strong {
+  color: var(--gb-googlemap-text-primary);
+}
+
+/* Custom map marker styles */
+.custom-marker {
+  background: var(--gb-googlemap-bg-white);
+  border: var(--gb-googlemap-border-thick) solid var(--gb-googlemap-primary);
+  border-radius: var(--gb-googlemap-radius-round);
+  padding: var(--gb-googlemap-space-xs);
+  box-shadow: var(--gb-googlemap-shadow-light);
+  cursor: pointer;
+  transition: var(--gb-googlemap-transition-normal);
+}
+
+.custom-marker:hover {
+  transform: scale(1.1);
+  box-shadow: var(--gb-googlemap-shadow-medium);
+}
+
+.marker-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.marker-icon {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.marker-label {
+  font-size: var(--gb-googlemap-font-md);
+  font-weight: bold;
+  color: var(--gb-googlemap-primary);
+  white-space: nowrap;
+  background: var(--gb-googlemap-bg-white);
+  padding: 2px 6px;
+  border-radius: var(--gb-googlemap-radius-sm);
+  box-shadow: var(--gb-googlemap-shadow-basic);
+}
+
+
+
+/* =============================================================================
+   DEALER LOCATOR STYLES
+   ============================================================================= */
+.dealer-locator {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: var(--gb-googlemap-space-xl);
+  height: var(--gb-googlemap-height-list);
+  margin-top: 20px;
+  margin-bottom: 4rem; /* Added extra bottom margin */
+}
+
+.dealer-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gb-googlemap-space-md);
+  order: 1; /* Ensure sidebar is on the left */
+}
+
+#map {
+  order: 2; /* Ensure map is on the right */
+}
+
+.dealer-details {
+  background: var(--gb-googlemap-bg-light);
+  padding: var(--gb-googlemap-space-lg);
+  border-radius: var(--gb-googlemap-radius-xl);
+  flex: 1;
+}
+
+.dealer-list {
+  background: var(--gb-googlemap-bg-light);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-xl);
+  flex: 1;
+  max-height: var(--gb-googlemap-height-list);
+  overflow-y: auto;
+}
+
+/* Search Controls */
+.search-controls {
+  display: flex;
+  gap: var(--gb-googlemap-space-sm);
+  margin-bottom: var(--gb-googlemap-space-md);
+  position: sticky;
+  top: 0;
+  background: var(--gb-googlemap-bg-light);
+  padding: 5px;
+  z-index: 10;
+  border-bottom: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+}
+
+.search-input {
+  flex: 1;
+  padding: var(--gb-googlemap-space-sm) var(--gb-googlemap-space-sm);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-md);
+  font-size: var(--gb-googlemap-font-lg);
+  transition: var(--gb-googlemap-transition-border);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--gb-googlemap-primary);
+}
+
+.search-dropdown {
+  padding: var(--gb-googlemap-space-sm);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-md);
+  font-size: var(--gb-googlemap-font-lg);
+  background: white;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.search-dropdown:focus {
+  outline: none;
+  border-color: var(--gb-googlemap-primary);
+}
+
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dropdown-label {
+  font-size: var(--gb-googlemap-font-xs);
+  color: var(--gb-googlemap-text-secondary);
+  margin-bottom: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reset-button {
+  padding: var(--gb-googlemap-space-sm) var(--gb-googlemap-space-sm);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  border-radius: var(--gb-googlemap-radius-md);
+  font-size: var(--gb-googlemap-font-2xl);
+  background: white;
+  cursor: pointer;
+  transition: var(--gb-googlemap-transition-fast);
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-button:hover {
+  background: var(--gb-googlemap-primary);
+  color: white;
+  border-color: var(--gb-googlemap-primary);
+}
+
+.reset-button:focus {
+  outline: none;
+  border-color: var(--gb-googlemap-primary);
+}
+
+/* Search Spinner */
+.search-spinner {
+  display: flex;
+  align-items: center;
+  gap: var(--gb-googlemap-space-sm);
+  margin-bottom: var(--gb-googlemap-space-md);
+  font-size: var(--gb-googlemap-font-lg);
+  color: var(--gb-googlemap-primary);
+  position: sticky;
+  top: 60px; /* Position below the search controls */
+  background: var(--gb-googlemap-bg-light);
+  padding: var(--gb-googlemap-space-sm) 0;
+  z-index: 9;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: var(--gb-googlemap-border-thick) solid #f3f3f3;
+  border-top: var(--gb-googlemap-border-thick) solid var(--gb-googlemap-primary);
+  border-radius: var(--gb-googlemap-radius-round);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dealer Items Container */
+#dealer-items {
+  margin-top: 0.5rem;
+}
+
+.dealer-item {
+  padding: var(--gb-googlemap-space-md);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-gray);
+  border-radius: var(--gb-googlemap-radius-lg);
+  margin-bottom: var(--gb-googlemap-space-sm);
+  cursor: pointer;
+  transition: var(--gb-googlemap-transition-fast);
+}
+
+.dealer-item:hover {
+  background: var(--gb-googlemap-bg-white);
+  border-color: var(--gb-googlemap-primary);
+}
+
+.dealer-item.active {
+  background: var(--gb-googlemap-primary);
+  color: white;
+  border-color: var(--gb-googlemap-primary);
+}
+
+.dealer-item h5 {
+  margin: 0 0 var(--gb-googlemap-space-sm) 0;
+  font-size: var(--gb-googlemap-font-2xl);
+  font-weight: 600;
+}
+
+.dealer-item p {
+  margin: 0rem 0;
+  font-size: var(--gb-googlemap-font-base);
+  opacity: 0.8;
+}
+
+.dealer-header {
+  display: flex;
+  align-items: center;
+
+
+}
+
+.dealer-header h3 {
+  margin: 0;
+}
+
+
+
+.dealer-actions {
+  display: flex;
+  gap: var(--gb-googlemap-space-sm);
+  margin-top: var(--gb-googlemap-space-md);
+}
+
+.dealer-actions .btn-secondary {
+
+  background: transparent;
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-primary);
+  color: var(--gb-googlemap-primary);
+}
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  
+  
+  
+  
+  .map-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  
+  .dealer-sidebar {
+    order: 2;
+    height: auto;
+    max-height: var(--gb-googlemap-height-mobile-sidebar);
+  }
+  
+  .map-wrapper {
+    order: 1;
+    height: var(--gb-googlemap-height-mobile-sidebar);
+  }
+  
+  #map {
+    min-height: var(--gb-googlemap-height-mobile-sidebar);
+  }
+  
+  .dealer-locator {
+    grid-template-columns: 1fr;
+    height: auto;
+    margin-bottom: 3rem; /* Ensure spacing on mobile */
+  }
+  
+  .dealer-sidebar {
+    order: 2;
+  }
+  
+  #map {
+    height: var(--gb-googlemap-height-mobile);
+    order: 1;
+  }
+}
+
+/* =============================================================================
+   LAYOUT CONTAINERS (moved from main.css)
+   ============================================================================= */
+.contain {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =============================================================================
+   BUTTON STYLES (moved from main.css)  
+   ============================================================================= */
+.btn-secondary {
+  background: var(--gb-googlemap-primary-dark);
+  color: var(--gb-googlemap-text-light);
+  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-primary-dark);
+  padding: 8px 8px 6px 8px;
+  border-radius: var(--gb-googlemap-radius-xs);
+  text-decoration: none;
+  font-size: var(--gb-googlemap-font-lg);
+}
+
+.btn-secondary:hover {
+  border: var(--gb-googlemap-border-thin) solid #D72B1F;
+  background: var(--gb-googlemap-bg-white);
+  color: var(--gb-googlemap-primary-dark);
+}
+
+/* =============================================================================
+   GOOGLE MAPS STYLES (moved from main.css)
+   ============================================================================= */
+
+/*
+ * Property styles in unhighlighted state.
+ */
+.property {
+  align-items: center;
+  background-color: var(--gb-googlemap-bg-white);
+  border-radius: var(--gb-googlemap-radius-round);
+  color: #263238;
+  display: flex;
+  font-size: 14px;
+  gap: 15px;
+  height: 30px;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+  position: relative;
+  transition: var(--gb-googlemap-transition-normal);
+  width: 30px;
+  transform: translateY(-9px);
+}
+
+.property::after {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--gb-googlemap-bg-white);
+  content: "";
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 95%;
+  transform: translate(-50%, 0);
+  transition: var(--gb-googlemap-transition-normal);
+  width: 0;
+  z-index: 1;
+}
+
+.property .icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: var(--gb-googlemap-text-light);
+}
+
+.property .icon svg {
+  height: 20px;
+  width: auto;
+}
+
+.property .details {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+
+.property .address {
+  color: var(--gb-googlemap-text-secondary);
+  font-size: 10px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.property .features {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.property .features > div {
+  align-items: center;
+  background: #F5F5F5;
+  border-radius: 5px;
+  border: var(--gb-googlemap-border-thin) solid #ccc;
+  display: flex;
+  font-size: 10px;
+  gap: 5px;
+  padding: 5px;
+}
+
+/*
+ * Property styles in highlighted state.
+ */
+.property.highlight {
+  background-color: var(--gb-googlemap-bg-white);
+  border-radius: var(--gb-googlemap-radius-xl);
+  box-shadow: var(--gb-googlemap-shadow-heavy);
+  height: 80px;
+  padding: 8px 15px;
+  width: auto;
+}
+
+.property.highlight::after {
+  border-top: 9px solid var(--gb-googlemap-bg-white);
+}
+
+.property.highlight .details {
+  display: flex;
+}
+
+.property.highlight .icon svg {
+  width: 50px;
+  height: 50px;
+}
+
+/* Add this new class for selected/active pins - insert after the existing .property.highlight styles */
+.property.selected {
+  background-color: #FFD700; /* Gold color */
+  border-radius: var(--gb-googlemap-radius-round);
+  box-shadow: var(--gb-googlemap-shadow-medium);
+  height: 30px;
+  width: 30px;
+}
+
+.property.selected::after {
+  border-top: 9px solid #FFD700; /* Gold color for the pointer */
+}
+
+.property.selected .icon {
+  color: var(--gb-googlemap-text-primary); /* Dark text on gold background */
+}

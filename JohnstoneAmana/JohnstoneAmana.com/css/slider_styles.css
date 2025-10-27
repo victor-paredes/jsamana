@@ -1,0 +1,151 @@
+
+/* =============================================================================
+   HERO SLIDER
+   ============================================================================= */
+.hero-slider {
+  height: 45vh;
+  padding: 0;
+  margin: 0;
+}
+
+.glide__slide {
+  background: var(--gradient-brand);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45vh;
+}
+
+.slide-content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.slide-text {
+  flex: 1;
+  padding: 0 4rem 0 2rem;
+}
+
+.slide-text ul {
+  list-style: none;
+  padding-left: 2em;
+  margin: 0;
+}
+
+.slide-text li {
+  position: relative;
+  margin-bottom: 0.5em;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.slide-text li::before {
+  content: "•";
+  position: absolute;
+  left: -1em;
+  top: 0;
+  color: #fff; /* custom bullet color */
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+
+.slide-text h2 {
+  color: inherit;
+}
+
+.slide-text h2 {
+  text-shadow: 4px 3px 0 var(--brand-secondary);
+}
+
+.slide-text p {
+  color: inherit;
+}
+
+.slide-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.slide-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* =============================================================================
+   SLIDER CONTROLS (GLIDE.JS)
+   ============================================================================= */
+.glide__arrow {
+  color: var(--text-light);
+  border-radius: 999px;
+  top: auto;
+  bottom: 20px;
+  transform: translateY(0);
+}
+
+.glide__arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: var(--text-light);
+}
+
+.glide__bullet {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+}
+
+.glide__bullet--active,
+.glide__bullet:hover {
+  background-color: var(--text-light);
+}
+
+/* =============================================================================
+   MOBILE RESPONSIVE - SLIDE TEXT
+   ============================================================================= */
+@media (max-width: 768px) {
+  .hero-slider {
+  height: 55vh;
+  padding: 0;
+  margin: 0;
+}
+.glide__slide {
+  height: 55vh;
+}
+  .slide-text {
+    text-align: center;
+    padding: 0 !important;
+    flex: 0.5;
+  }
+  
+  .slide-text h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+  }
+  
+  .slide-text p {
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    margin-bottom: 0;
+  }
+  
+  /* .slide-image {
+    display: none;
+  } */
+}
+
