@@ -47,6 +47,14 @@
   }
 }
 
+
+
+  .glide__bullets {
+    bottom: 22px; /* Push nav dots lower on narrowest screens */
+  }
+
+  
+
 .glide__slide {
   background: var(--gradient-brand);
   color: var(--text-light);
