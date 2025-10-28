@@ -1,5 +1,8 @@
 // GB Slider - Custom slider functionality
 
+// Flag to ensure fade-in only happens once on initial load
+let hasInitiallyLoaded = false;
+
 // Function to preload slider images
 function preloadSliderImages(htmlContent) {
   return new Promise((resolve) => {
@@ -377,39 +380,26 @@ function initializeSlider() {
     setTimeout(() => {
       equalizeSlideHeights();
       
-      // Fade in the slider after all calculations are complete
+      // Fade in the slider after all calculations are complete (only on initial load)
       setTimeout(() => {
-        if (sliderElement) {
+        if (sliderElement && !hasInitiallyLoaded) {
           sliderElement.classList.remove('loading');
           sliderElement.classList.add('loaded');
+          hasInitiallyLoaded = true;
         }
       }, 50);
     }, 25);
   });
   
-  // Enhanced resize handler with stability detection
+  // Enhanced resize handler with stability detection - no fade effects on resize
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
-    
-    // Add loading state during resize recalculations
-    if (sliderElement) {
-      sliderElement.classList.add('loading');
-      sliderElement.classList.remove('loaded');
-    }
     
     resizeTimeout = setTimeout(() => {
       waitForLayoutStability(() => {
         adjustImageSizesForMaxHeight();
         equalizeSlideHeights();
-        
-        // Fade back in after resize calculations
-        setTimeout(() => {
-          if (sliderElement) {
-            sliderElement.classList.remove('loading');
-            sliderElement.classList.add('loaded');
-          }
-        }, 50);
       });
     }, 150);
   });
