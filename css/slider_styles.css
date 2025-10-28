@@ -7,6 +7,46 @@
   margin: 0;
 }
 
+/* Max height constraints for slider with responsive breakpoints */
+/* Narrowest: <500px */
+@media (max-width: 499px) {
+  .hero-slider[data-narrowest-max-height-px] {
+    max-height: calc(var(--narrowest-slider-max-height, none) * 1px);
+    overflow: hidden;
+  }
+  
+  .hero-slider[data-narrowest-max-height-px] .glide__slide {
+    max-height: calc(var(--narrowest-slider-max-height, none) * 1px);
+    box-sizing: border-box;
+  }
+}
+
+/* Middle: 500px - 999px */
+@media (min-width: 500px) and (max-width: 999px) {
+  .hero-slider[data-middle-max-height-px] {
+    max-height: calc(var(--middle-slider-max-height, none) * 1px);
+    overflow: hidden;
+  }
+  
+  .hero-slider[data-middle-max-height-px] .glide__slide {
+    max-height: calc(var(--middle-slider-max-height, none) * 1px);
+    box-sizing: border-box;
+  }
+}
+
+/* Widest: ≥1000px */
+@media (min-width: 1000px) {
+  .hero-slider[data-widest-max-height-px] {
+    max-height: calc(var(--widest-slider-max-height, none) * 1px);
+    overflow: hidden;
+  }
+  
+  .hero-slider[data-widest-max-height-px] .glide__slide {
+    max-height: calc(var(--widest-slider-max-height, none) * 1px);
+    box-sizing: border-box;
+  }
+}
+
 .glide__slide {
   background: var(--gradient-brand);
   color: var(--text-light);

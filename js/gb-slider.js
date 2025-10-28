@@ -7,6 +7,7 @@ function loadSliderContent() {
     .then(html => {
       document.getElementById('slider-container').innerHTML = html;
       applyCustomImageProperties();
+      applySliderMaxHeights();
       initializeSlider();
     })
     .catch(error => {
@@ -113,12 +114,122 @@ function applyCustomImageProperties() {
   // No JavaScript processing needed for data-narrowest-reverse, data-middle-reverse, data-widest-reverse
 }
 
+// Function to apply slider max height properties from data attributes
+function applySliderMaxHeights() {
+  const heroSlider = document.querySelector('.hero-slider');
+  if (!heroSlider) return;
+  
+  // Get max height data attributes
+  const narrowestMaxHeight = heroSlider.getAttribute('data-narrowest-max-height-px');
+  const middleMaxHeight = heroSlider.getAttribute('data-middle-max-height-px');
+  const widestMaxHeight = heroSlider.getAttribute('data-widest-max-height-px');
+  
+  // Apply CSS custom properties only if data attributes exist
+  if (narrowestMaxHeight) {
+    heroSlider.style.setProperty('--narrowest-slider-max-height', narrowestMaxHeight);
+  }
+  if (middleMaxHeight) {
+    heroSlider.style.setProperty('--middle-slider-max-height', middleMaxHeight);
+  }
+  if (widestMaxHeight) {
+    heroSlider.style.setProperty('--widest-slider-max-height', widestMaxHeight);
+  }
+  
+  // Apply intelligent image scaling when content exceeds max height
+  adjustImageSizesForMaxHeight();
+}
+
+// Function to intelligently resize images when content exceeds max height
+function adjustImageSizesForMaxHeight() {
+  const heroSlider = document.querySelector('.hero-slider');
+  if (!heroSlider) return;
+  
+  const slides = heroSlider.querySelectorAll('.glide__slide');
+  
+  slides.forEach(slide => {
+    const slideImages = slide.querySelectorAll('.slide-image img');
+    const slideContent = slide.querySelector('.slide-content');
+    
+    // Get the current max height constraint for this breakpoint
+    const maxHeight = getCurrentMaxHeight(heroSlider);
+    if (!maxHeight) return; // No max height constraint, skip
+    
+    // Reset any previous scaling to get natural dimensions
+    slideImages.forEach(img => {
+      img.style.removeProperty('max-width');
+      img.style.removeProperty('max-height');
+      img.style.removeProperty('width');
+      img.style.removeProperty('height');
+    });
+    
+    // Remove any forced height constraints to measure natural content
+    slide.style.removeProperty('height');
+    
+    // Wait a frame for layout to settle, then check if scaling is needed
+    setTimeout(() => {
+      const slidePadding = parseFloat(getComputedStyle(slide).paddingTop) + parseFloat(getComputedStyle(slide).paddingBottom);
+      const availableContentHeight = maxHeight - slidePadding;
+      const naturalSlideHeight = slide.offsetHeight;
+      
+      // Only scale if content actually exceeds the max height
+      if (naturalSlideHeight > maxHeight) {
+        const naturalContentHeight = slideContent.scrollHeight;
+        const scaleFactor = (availableContentHeight * 0.90) / naturalContentHeight; // 90% to ensure fit
+        
+        slideImages.forEach(img => {
+          const imgContainer = img.closest('.slide-image');
+          const currentStyles = getComputedStyle(img);
+          
+          // Get current dimensions
+          let currentMaxWidth = parseFloat(currentStyles.maxWidth) || img.offsetWidth;
+          let currentMaxHeight = parseFloat(currentStyles.maxHeight) || img.offsetHeight;
+          
+          // Apply scaling only if needed
+          const newMaxWidth = currentMaxWidth * scaleFactor;
+          const newMaxHeight = currentMaxHeight * scaleFactor;
+          
+          img.style.maxWidth = newMaxWidth + 'px';
+          img.style.maxHeight = newMaxHeight + 'px';
+          img.style.width = 'auto';
+          img.style.height = 'auto';
+          
+          // Ensure the image container doesn't override our constraints
+          if (imgContainer) {
+            imgContainer.style.maxHeight = newMaxHeight + 'px';
+          }
+        });
+      }
+      // If content fits naturally, do nothing - let it use its natural height
+    }, 10);
+  });
+}
+
+// Helper function to get current max height based on screen size
+function getCurrentMaxHeight(heroSlider) {
+  const width = window.innerWidth;
+  
+  if (width < 500) {
+    const height = heroSlider.getAttribute('data-narrowest-max-height-px');
+    return height ? parseInt(height) : null;
+  } else if (width >= 500 && width < 1000) {
+    const height = heroSlider.getAttribute('data-middle-max-height-px');
+    return height ? parseInt(height) : null;
+  } else {
+    const height = heroSlider.getAttribute('data-widest-max-height-px');
+    return height ? parseInt(height) : null;
+  }
+}
+
 // Function to equalize slide heights
 function equalizeSlideHeights() {
+  const heroSlider = document.querySelector('.hero-slider');
   const slides = document.querySelectorAll('.glide__slide');
   if (slides.length === 0) return;
   
-  // Reset heights first
+  // Check if there's a max height constraint
+  const constraintMaxHeight = getCurrentMaxHeight(heroSlider);
+  
+  // Reset heights first to get natural dimensions
   slides.forEach(slide => {
     slide.style.height = 'auto';
   });
@@ -132,7 +243,12 @@ function equalizeSlideHeights() {
     }
   });
   
-  // Set all slides to the same height
+  // If there's a max height constraint, don't exceed it
+  if (constraintMaxHeight && maxHeight > constraintMaxHeight) {
+    maxHeight = constraintMaxHeight;
+  }
+  
+  // Set all slides to the same height (but respecting max height constraint)
   slides.forEach(slide => {
     slide.style.height = maxHeight + 'px';
   });
@@ -149,14 +265,16 @@ function initializeSlider() {
   
   glide.mount();
   
-  // Equalize heights after mounting
+  // Equalize heights and adjust image sizing after mounting
   setTimeout(() => {
+    adjustImageSizesForMaxHeight();
     equalizeSlideHeights();
   }, 100);
   
-  // Re-equalize on window resize
+  // Re-equalize and re-adjust on window resize
   window.addEventListener('resize', () => {
     setTimeout(() => {
+      adjustImageSizesForMaxHeight();
       equalizeSlideHeights();
     }, 100);
   });
