@@ -244,6 +244,7 @@
   top: auto;
   bottom: 20px;
   transform: translateY(0);
+  border: transparent;  
 }
 
 .glide__arrow:hover {
