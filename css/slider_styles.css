@@ -86,60 +86,152 @@
 
 /* Custom width properties for slide images - Responsive breakpoints */
 
-/* Mobile: ≤768px */
-@media (max-width: 768px) {
-  .slide-image[data-mobile-max-width][data-mobile-width-unit="percent"] img {
-    max-width: calc(var(--mobile-max-width, 100) * 1%);
+/* Narrowest: <500px */
+@media (max-width: 499px) {
+  .slide-image[data-narrowest-max-width][data-narrowest-width-unit="percent"] img {
+    max-width: calc(var(--narrowest-max-width, 100) * 1%);
   }
 
-  .slide-image[data-mobile-max-width][data-mobile-width-unit="px"] img {
-    max-width: calc(var(--mobile-max-width, 100) * 1px);
+  .slide-image[data-narrowest-max-width][data-narrowest-width-unit="px"] img {
+    max-width: calc(var(--narrowest-max-width, 100) * 1px);
   }
 
-  .slide-image[data-mobile-width-percentage][data-mobile-width-unit="percent"] img {
-    width: calc(var(--mobile-width-percentage, auto) * 1%);
+  .slide-image[data-narrowest-width-percentage][data-narrowest-width-unit="percent"] img {
+    width: calc(var(--narrowest-width-percentage, auto) * 1%);
   }
 
-  .slide-image[data-mobile-width-percentage][data-mobile-width-unit="px"] img {
-    width: calc(var(--mobile-width-percentage, auto) * 1px);
-  }
-}
-
-/* Tablet: 769px to 1399px */
-@media (min-width: 769px) and (max-width: 1399px) {
-  .slide-image[data-tablet-max-width][data-tablet-width-unit="percent"] img {
-    max-width: calc(var(--tablet-max-width, 100) * 1%);
-  }
-
-  .slide-image[data-tablet-max-width][data-tablet-width-unit="px"] img {
-    max-width: calc(var(--tablet-max-width, 100) * 1px);
-  }
-
-  .slide-image[data-tablet-width-percentage][data-tablet-width-unit="percent"] img {
-    width: calc(var(--tablet-width-percentage, auto) * 1%);
-  }
-
-  .slide-image[data-tablet-width-percentage][data-tablet-width-unit="px"] img {
-    width: calc(var(--tablet-width-percentage, auto) * 1px);
+  .slide-image[data-narrowest-width-percentage][data-narrowest-width-unit="px"] img {
+    width: calc(var(--narrowest-width-percentage, auto) * 1px);
   }
 }
 
-/* Desktop: ≥1400px */
-@media (min-width: 1400px) {
-  .slide-image[data-desktop-max-width][data-desktop-width-unit="percent"] img {
-    max-width: calc(var(--desktop-max-width, 100) * 1%);
+/* Middle: 500px to 768px */
+@media (min-width: 500px) and (max-width: 768px) {
+  .slide-image[data-middle-max-width][data-middle-width-unit="percent"] img {
+    max-width: calc(var(--middle-max-width, 100) * 1%);
   }
 
-  .slide-image[data-desktop-max-width][data-desktop-width-unit="px"] img {
-    max-width: calc(var(--desktop-max-width, 100) * 1px);
+  .slide-image[data-middle-max-width][data-middle-width-unit="px"] img {
+    max-width: calc(var(--middle-max-width, 100) * 1px);
   }
 
-  .slide-image[data-desktop-width-percentage][data-desktop-width-unit="percent"] img {
-    width: calc(var(--desktop-width-percentage, auto) * 1%);
+  .slide-image[data-middle-width-percentage][data-middle-width-unit="percent"] img {
+    width: calc(var(--middle-width-percentage, auto) * 1%);
   }
 
-  .slide-image[data-desktop-width-percentage][data-desktop-width-unit="px"] img {
-    width: calc(var(--desktop-width-percentage, auto) * 1px);
+  .slide-image[data-middle-width-percentage][data-middle-width-unit="px"] img {
+    width: calc(var(--middle-width-percentage, auto) * 1px);
+  }
+}
+
+/* Widest: >768px */
+@media (min-width: 769px) {
+  .slide-image[data-widest-max-width][data-widest-width-unit="percent"] img {
+    max-width: calc(var(--widest-max-width, 100) * 1%);
+  }
+
+  .slide-image[data-widest-max-width][data-widest-width-unit="px"] img {
+    max-width: calc(var(--widest-max-width, 100) * 1px);
+  }
+
+  .slide-image[data-widest-width-percentage][data-widest-width-unit="percent"] img {
+    width: calc(var(--widest-width-percentage, auto) * 1%);
+  }
+
+  .slide-image[data-widest-width-percentage][data-widest-width-unit="px"] img {
+    width: calc(var(--widest-width-percentage, auto) * 1px);
+  }
+}
+
+/* Custom height clipping properties for slide images - Responsive breakpoints */
+
+/* Narrowest: <500px */
+@media (max-width: 499px) {
+  .slide-image[data-narrowest-clip-height-px] {
+    max-height: calc(var(--narrowest-clip-height, 300) * 1px);
+    overflow: hidden;
+  }
+}
+
+/* Middle: 500px to 768px */
+@media (min-width: 500px) and (max-width: 768px) {
+  .slide-image[data-middle-clip-height-px] {
+    max-height: calc(var(--middle-clip-height, 300) * 1px);
+    overflow: hidden;
+  }
+}
+
+/* Widest: >768px */
+@media (min-width: 769px) {
+  .slide-image[data-widest-clip-height-px] {
+    max-height: calc(var(--widest-clip-height, 300) * 1px);
+    overflow: hidden;
+  }
+}
+
+/* Custom width properties for slide text - Responsive breakpoints */
+
+/* Narrowest: <500px */
+@media (max-width: 499px) {
+  .slide-text[data-narrowest-width-px] {
+    max-width: calc(var(--narrowest-text-width, 100) * 1px);
+  }
+  
+  .slide-text[data-narrowest-width-percent] {
+    max-width: calc(var(--narrowest-text-width-percent, 100) * 1%);
+  }
+}
+
+/* Middle: 500px to 768px */
+@media (min-width: 500px) and (max-width: 768px) {
+  .slide-text[data-middle-width-px] {
+    max-width: calc(var(--middle-text-width, 100) * 1px);
+  }
+  
+  .slide-text[data-middle-width-percent] {
+    max-width: calc(var(--middle-text-width-percent, 100) * 1%);
+  }
+}
+
+/* Widest: >768px */
+@media (min-width: 769px) {
+  .slide-text[data-widest-width-px] {
+    max-width: calc(var(--widest-text-width, 100) * 1px);
+  }
+  
+  .slide-text[data-widest-width-percent] {
+    max-width: calc(var(--widest-text-width-percent, 100) * 1%);
+  }
+}
+
+/* Custom reverse properties for slide content - Responsive breakpoints */
+
+/* Narrowest: <500px - Collapsed layout with optional reverse */
+@media (max-width: 499px) {
+  .slide-content {
+    flex-direction: column;
+  }
+  
+  .slide-content[data-narrowest-reverse="yes"] {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Middle: 500px to 768px - Collapsed layout with optional reverse */
+@media (min-width: 500px) and (max-width: 768px) {
+  .slide-content {
+    flex-direction: column;
+  }
+  
+  .slide-content[data-middle-reverse="yes"] {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Widest: >768px - Horizontal layout with optional reverse */
+@media (min-width: 769px) {
+  .slide-content[data-widest-reverse="yes"] {
+    flex-direction: row-reverse;
   }
 }
 
