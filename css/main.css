@@ -38,8 +38,14 @@ body {
 /* =============================================================================
    GLOBAL TYPOGRAPHY
    ============================================================================= */
-h1, h2 {
+h1 {
   font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: medium;
+}
+
+h2 {
+  font-size: 1.5rem;
   margin: 0 0 1rem 0;
   font-weight: medium;
 }
@@ -106,6 +112,19 @@ section {
   padding: 4rem 1rem;
   margin: auto;
 }
+
+
+
+
+/* Hero Banner */
+.hero-banner {
+  background: var(--gradient-brand);
+  color: var(--text-light);
+  text-align: center;
+  padding: 1rem 1rem;
+  margin-bottom: 2rem;
+}
+
 
 
 
@@ -346,22 +365,6 @@ button, .btn {
 
 
 
-/* =============================================================================
-   TOP BAR
-   ============================================================================= */
-.top-bar {
-  background: #fff;
-  padding: 0.75rem 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.top-bar span {
-  color: var(--brand-primary);
-  font-weight: bold;
-  font-size: 1rem;
-}
 
 /* =============================================================================
    CONTENT SECTIONS
