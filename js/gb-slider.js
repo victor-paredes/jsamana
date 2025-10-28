@@ -415,7 +415,9 @@ function initializeSlider() {
   });
 }
 
-// Initialize when DOM is loaded
+// Initialize when DOM is loaded - with lazy loading for better mobile performance
 document.addEventListener('DOMContentLoaded', function() {
-  loadSliderContent();
+  // Load slider 1 second after page load to allow critical content to render first
+  // This significantly improves perceived loading speed on mobile devices
+  setTimeout(loadSliderContent, 1000);
 });
