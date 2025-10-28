@@ -81,7 +81,7 @@
 
    /* Ensure proper spacing for the locations section */
 #locations {
-  padding: 4rem 2rem; /* Extra bottom padding */
+  padding: 2.2rem 2rem; /* Extra bottom padding */
   max-width: 1800px;
 }
 #locations h2 {
