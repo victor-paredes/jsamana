@@ -5,28 +5,20 @@
 .hero-slider {
   padding: 0;
   margin: 0;
-  /* Initial height placeholders to prevent layout shift */
-  min-height: 350px; /* Default minimum */
+  /* Loading states for smooth fade-in */
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
 }
 
-/* Responsive height placeholders */
-@media (max-width: 499px) {
-  .hero-slider {
-    min-height: 300px;
-  }
+.hero-slider.loading {
+  opacity: 0;
 }
 
-@media (min-width: 500px) and (max-width: 999px) {
-  .hero-slider {
-    min-height: 350px;
-  }
+.hero-slider.loaded {
+  opacity: 1;
 }
 
-@media (min-width: 1000px) {
-  .hero-slider {
-    min-height: 400px;
-  }
-}
+/* Remove forced min-heights to allow natural content sizing */
 
 /* Loading placeholder for slider */
 #slider-container {
@@ -61,22 +53,22 @@
   50% { background-position: 100% 50%; }
 }
 
-/* Responsive placeholder heights */
+/* Responsive placeholder heights - use reasonable estimates */
 @media (max-width: 499px) {
   #slider-container:empty::before {
-    height: 350px;
+    height: 350px; /* Reasonable mobile estimate */
   }
 }
 
 @media (min-width: 500px) and (max-width: 999px) {
   #slider-container:empty::before {
-    height: 400px;
+    height: 400px; /* Reasonable tablet estimate */
   }
 }
 
 @media (min-width: 1000px) {
   #slider-container:empty::before {
-    height: 450px;
+    height: 450px; /* Reasonable desktop estimate */
   }
 }
 

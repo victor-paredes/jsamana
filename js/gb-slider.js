@@ -48,6 +48,12 @@ async function loadSliderContent() {
     // Insert content after images are loaded
     document.getElementById('slider-container').innerHTML = html;
     
+    // Add loading class to prevent layout shift
+    const heroSlider = document.querySelector('.hero-slider');
+    if (heroSlider) {
+      heroSlider.classList.add('loading');
+    }
+    
     // Use layout stability detection instead of fixed delays
     // Small initial delay to let DOM settle, then check for stability
     setTimeout(() => {
@@ -370,6 +376,14 @@ function initializeSlider() {
     // Add a small additional delay for final adjustments
     setTimeout(() => {
       equalizeSlideHeights();
+      
+      // Fade in the slider after all calculations are complete
+      setTimeout(() => {
+        if (sliderElement) {
+          sliderElement.classList.remove('loading');
+          sliderElement.classList.add('loaded');
+        }
+      }, 50);
     }, 25);
   });
   
@@ -377,10 +391,25 @@ function initializeSlider() {
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
+    
+    // Add loading state during resize recalculations
+    if (sliderElement) {
+      sliderElement.classList.add('loading');
+      sliderElement.classList.remove('loaded');
+    }
+    
     resizeTimeout = setTimeout(() => {
       waitForLayoutStability(() => {
         adjustImageSizesForMaxHeight();
         equalizeSlideHeights();
+        
+        // Fade back in after resize calculations
+        setTimeout(() => {
+          if (sliderElement) {
+            sliderElement.classList.remove('loading');
+            sliderElement.classList.add('loaded');
+          }
+        }, 50);
       });
     }, 150);
   });
