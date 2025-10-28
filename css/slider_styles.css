@@ -28,7 +28,7 @@
 
 .slide-text {
   flex: 1;
-  padding: 0 4rem 0 2rem;
+  padding: 0 4rem 0 6rem;
 }
 
 .slide-text ul {
@@ -308,7 +308,17 @@
 
 }
 
-
+   @media (max-width: 900px) {
+    .slide-text h2 {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+  }
+    .slide-text p {
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    margin-bottom: 0;
+  }
+  }
 
    @media (max-width: 768px) {
 
@@ -322,6 +332,7 @@
     padding: 0 1rem 1rem 1rem;
   }
   
+  
   .slide-text {
     text-align: center;
     padding: 0;
@@ -330,15 +341,9 @@
   
   .slide-text h2 {
     text-align: center;
-    font-size: 1.5rem;
-    line-height: 1.7rem;
   }
   
-  .slide-text p {
-    font-size: 0.9rem;
-    line-height: 1.2rem;
-    margin-bottom: 0;
-  }
+  
 
 .slide-image {
     flex: 0.5;
