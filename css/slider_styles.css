@@ -8,6 +8,12 @@
   /* Loading states for smooth fade-in */
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
+  /* Prevent blinking on mobile scroll */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 .hero-slider.loading {
@@ -23,6 +29,11 @@
 /* Loading placeholder for slider */
 #slider-container {
   min-height: 300px; /* Fallback height */
+  /* Prevent blinking on mobile scroll */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 #slider-container:empty::before {
