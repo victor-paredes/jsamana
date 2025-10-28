@@ -2327,7 +2327,7 @@ const dealerLocations = [
 
 // Configuration for the map
 const mapConfig = {
-  defaultCenter: { lat: 28.2689191, lng: -82.6196011 },
+  defaultCenter: { lat: 28.2689191, lng: -82 },
   defaultZoom: 6.5,
   focusedZoom: 12,
   mapId: "AMANA_DEALER_MAP"
