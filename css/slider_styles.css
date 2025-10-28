@@ -5,6 +5,27 @@
 .hero-slider {
   padding: 0;
   margin: 0;
+  /* Initial height placeholders to prevent layout shift */
+  min-height: 350px; /* Default minimum */
+}
+
+/* Responsive height placeholders */
+@media (max-width: 499px) {
+  .hero-slider {
+    min-height: 300px;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+  .hero-slider {
+    min-height: 350px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero-slider {
+    min-height: 400px;
+  }
 }
 
 /* Loading placeholder for slider */

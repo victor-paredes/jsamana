@@ -48,15 +48,17 @@ async function loadSliderContent() {
     // Insert content after images are loaded
     document.getElementById('slider-container').innerHTML = html;
     
-    // Small delay to ensure DOM is ready, especially on iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const delay = isIOS ? 150 : 50;
-    
+    // Use layout stability detection instead of fixed delays
+    // Small initial delay to let DOM settle, then check for stability
     setTimeout(() => {
       applyCustomImageProperties();
       applySliderMaxHeights();
-      initializeSlider();
-    }, delay);
+      
+      // Wait for initial layout to stabilize before initializing slider
+      waitForLayoutStability(() => {
+        initializeSlider();
+      });
+    }, 25);
     
   } catch (error) {
     console.error('Error loading slider:', error);
@@ -304,6 +306,45 @@ function equalizeSlideHeights() {
   });
 }
 
+// Function to detect when layout has stabilized
+function waitForLayoutStability(callback, maxAttempts = 10) {
+  const heroSlider = document.querySelector('.hero-slider');
+  if (!heroSlider) {
+    callback();
+    return;
+  }
+  
+  let previousHeight = 0;
+  let stableCount = 0;
+  let attempts = 0;
+  
+  const checkStability = () => {
+    attempts++;
+    const currentHeight = heroSlider.offsetHeight;
+    
+    // If height hasn't changed, increment stable count
+    if (currentHeight === previousHeight && currentHeight > 0) {
+      stableCount++;
+    } else {
+      stableCount = 0; // Reset if height changed
+    }
+    
+    previousHeight = currentHeight;
+    
+    // Layout is stable if height hasn't changed for 2 consecutive checks
+    if (stableCount >= 2 || attempts >= maxAttempts) {
+      callback();
+      return;
+    }
+    
+    // Check again after a short delay
+    setTimeout(checkStability, 50);
+  };
+  
+  // Start stability checking
+  setTimeout(checkStability, 10);
+}
+
 // Function to initialize Glide.js slider
 function initializeSlider() {
   const sliderElement = document.querySelector('.hero-slider');
@@ -322,24 +363,26 @@ function initializeSlider() {
   
   glide.mount();
   
-  // Give extra time for iOS Safari and slower devices
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const adjustmentDelay = isIOS ? 200 : 100;
-  
-  // Initial height adjustment after mounting
-  setTimeout(() => {
+  // Wait for layout to stabilize before height calculations
+  waitForLayoutStability(() => {
     adjustImageSizesForMaxHeight();
-    equalizeSlideHeights();
-  }, adjustmentDelay);
+    
+    // Add a small additional delay for final adjustments
+    setTimeout(() => {
+      equalizeSlideHeights();
+    }, 25);
+  });
   
-  // Debounced resize handler for better performance
+  // Enhanced resize handler with stability detection
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      adjustImageSizesForMaxHeight();
-      equalizeSlideHeights();
-    }, 200);
+      waitForLayoutStability(() => {
+        adjustImageSizesForMaxHeight();
+        equalizeSlideHeights();
+      });
+    }, 150);
   });
 }
 
