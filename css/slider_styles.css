@@ -494,7 +494,7 @@
 /* Widest screens: >900px - Larger h2 text for slides */
 @media (min-width: 901px) {
   .slide-text h2 {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     line-height: 2.8rem;
   }
 }
