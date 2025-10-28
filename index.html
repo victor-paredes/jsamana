@@ -63,14 +63,6 @@
 						<div class="dealer-list">
 							<div class="search-controls">
 								<input type="text" id="dealer-search" placeholder="Search..." class="search-input">
-								<div class="dropdown-container">
-									<label class="dropdown-label">Search Field</label>
-									<select id="search-filter" class="search-dropdown">
-										<option value="all">All</option>
-										<option value="name">Name</option>
-										<option value="address">Address</option>
-									</select>
-								</div>
 								<button id="reset-map" class="reset-button" title="Reset map view">↻</button>
 							</div>
 							<div id="search-spinner" class="search-spinner" style="display: none;">
@@ -302,7 +294,7 @@ $(function() {
     let filteredMarkers = [];
     let searchTimeout;
 
-    function filterDealers(searchTerm, filterType) {
+    function filterDealers(searchTerm) {
       const searchSpinner = document.getElementById('search-spinner');
       const dealerItems = document.getElementById('dealer-items');
       
@@ -319,22 +311,15 @@ $(function() {
       searchTimeout = setTimeout(() => {
         const lowerSearchTerm = searchTerm.toLowerCase().trim();
         
-        // Filter locations based on search criteria
+        // Filter locations based on search criteria (always search both name and address)
         filteredLocations = locations.filter(location => {
           if (!lowerSearchTerm) return true; // Show all if no search term
           
           const name = (location.info.name || '').toLowerCase();
           const address = (location.info.address || '').toLowerCase();
           
-          switch (filterType) {
-            case 'name':
-              return name.includes(lowerSearchTerm);
-            case 'address':
-              return address.includes(lowerSearchTerm);
-            case 'all':
-            default:
-              return name.includes(lowerSearchTerm) || address.includes(lowerSearchTerm);
-          }
+          // Always search both name and address
+          return name.includes(lowerSearchTerm) || address.includes(lowerSearchTerm);
         });
 
         // Update the dealer list display
@@ -411,16 +396,11 @@ $(function() {
 
     function initSearch() {
       const searchInput = document.getElementById('dealer-search');
-      const searchFilter = document.getElementById('search-filter');
       const resetButton = document.getElementById('reset-map');
       
       // Add event listeners
       searchInput.addEventListener('input', () => {
-        filterDealers(searchInput.value, searchFilter.value);
-      });
-      
-      searchFilter.addEventListener('change', () => {
-        filterDealers(searchInput.value, searchFilter.value);
+        filterDealers(searchInput.value);
       });
 
       resetButton.addEventListener('click', () => {
@@ -450,10 +430,8 @@ $(function() {
       
       // Clear search input
       const searchInput = document.getElementById('dealer-search');
-      const searchFilter = document.getElementById('search-filter');
       
       searchInput.value = '';
-      searchFilter.value = 'all';
       
       // Reset filtered locations to show all
       filteredLocations = locations;
