@@ -51,7 +51,7 @@
   --gb-googlemap-height-map: 600px;
   --gb-googlemap-height-mobile: 300px;
   --gb-googlemap-height-mobile-sidebar: 400px;
-  --gb-googlemap-height-list: 500px;
+  --gb-googlemap-height-list: 600px;
   
   /* Border Widths */
   --gb-googlemap-border-thin: 1px;
@@ -93,6 +93,14 @@
 @media (max-width: 768px) {
   #locations {
     padding: 1rem; /* All sides 1rem on mobile */
+  }
+}
+
+/* Ensure proper padding on smaller screens to prevent overflow */
+@media (max-width: 1024px) {
+  #locations {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
    .map-container {
@@ -242,6 +250,9 @@
   height: var(--gb-googlemap-height-list);
   margin-top: 20px;
   margin-bottom: 4rem; /* Added extra bottom margin */
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .dealer-sidebar {
@@ -249,10 +260,16 @@
   flex-direction: column;
   gap: var(--gb-googlemap-space-md);
   order: 1; /* Ensure sidebar is on the left */
+  width: 100%;
+  max-width: 100%;
+  min-width: 320px; /* Ensure minimum width for search controls */
 }
 
 #map {
   order: 2; /* Ensure map is on the right */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0; /* Allow grid item to shrink below content size */
 }
 
 .dealer-details {
@@ -269,6 +286,7 @@
   flex: 1;
   max-height: var(--gb-googlemap-height-list);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Search Controls */
@@ -282,6 +300,9 @@
   padding: 5px;
   z-index: 10;
   border-bottom: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
+  min-width: 250px;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .search-input {
@@ -298,35 +319,9 @@
   border-color: var(--gb-googlemap-primary);
 }
 
-.search-dropdown {
-  padding: var(--gb-googlemap-space-sm);
-  border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
-  border-radius: var(--gb-googlemap-radius-md);
-  font-size: var(--gb-googlemap-font-lg);
-  background: white;
-  cursor: pointer;
-  min-width: 80px;
-}
 
-.search-dropdown:focus {
-  outline: none;
-  border-color: var(--gb-googlemap-primary);
-}
 
-.dropdown-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
 
-.dropdown-label {
-  font-size: var(--gb-googlemap-font-xs);
-  color: var(--gb-googlemap-text-secondary);
-  margin-bottom: 0;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
 .reset-button {
   padding: var(--gb-googlemap-space-sm) var(--gb-googlemap-space-sm);
@@ -337,6 +332,8 @@
   cursor: pointer;
   transition: var(--gb-googlemap-transition-fast);
   min-width: 40px;
+  width: 40px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -451,6 +448,13 @@
 
 
 
+/* Prevent overflow on narrow screens that aren't quite mobile yet */
+@media (max-width: 900px) {
+  .dealer-locator {
+    gap: 1rem; /* Reduce gap on narrower screens */
+  }
+}
+
 @media (max-width: 768px) {
   
   
@@ -464,7 +468,7 @@
   .dealer-sidebar {
     order: 2;
     height: auto;
-    max-height: var(--gb-googlemap-height-mobile-sidebar);
+    max-height: 500px;
   }
   
   .map-wrapper {
@@ -480,6 +484,7 @@
     grid-template-columns: 1fr;
     height: auto;
     margin-bottom: 3rem; /* Ensure spacing on mobile */
+    gap: 1rem; /* Smaller gap on mobile */
   }
   
   .dealer-sidebar {
