@@ -7,6 +7,58 @@
   margin: 0;
 }
 
+/* Loading placeholder for slider */
+#slider-container {
+  min-height: 300px; /* Fallback height */
+}
+
+#slider-container:empty::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 400px;
+  background: var(--gradient-brand, linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%));
+  background-size: 400% 400%;
+  animation: loadingGradient 2s ease-in-out infinite;
+  position: relative;
+}
+
+#slider-container:empty::after {
+  content: 'Loading...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  z-index: 10;
+}
+
+@keyframes loadingGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Responsive placeholder heights */
+@media (max-width: 499px) {
+  #slider-container:empty::before {
+    height: 350px;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+  #slider-container:empty::before {
+    height: 400px;
+  }
+}
+
+@media (min-width: 1000px) {
+  #slider-container:empty::before {
+    height: 450px;
+  }
+}
+
 /* Max height constraints for slider with responsive breakpoints */
 /* Narrowest: <500px */
 @media (max-width: 499px) {
@@ -53,7 +105,7 @@
     bottom: 22px; /* Push nav dots lower on narrowest screens */
   }
 
-  
+
 
 .glide__slide {
   background: var(--gradient-brand);

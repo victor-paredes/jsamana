@@ -1,18 +1,68 @@
 // GB Slider - Custom slider functionality
 
-// Function to load slider content
-function loadSliderContent() {
-  fetch('index-slider.html')
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('slider-container').innerHTML = html;
+// Function to preload slider images
+function preloadSliderImages(htmlContent) {
+  return new Promise((resolve) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    const images = tempDiv.querySelectorAll('img');
+    
+    if (images.length === 0) {
+      resolve();
+      return;
+    }
+    
+    let loadedCount = 0;
+    const totalImages = images.length;
+    
+    const checkAllLoaded = () => {
+      loadedCount++;
+      if (loadedCount === totalImages) {
+        resolve();
+      }
+    };
+    
+    images.forEach(img => {
+      const newImg = new Image();
+      newImg.onload = checkAllLoaded;
+      newImg.onerror = checkAllLoaded; // Still resolve on error
+      newImg.src = img.src;
+    });
+    
+    // Fallback timeout for slow networks (3 seconds)
+    setTimeout(() => {
+      resolve();
+    }, 3000);
+  });
+}
+
+// Function to load slider content with preloading
+async function loadSliderContent() {
+  try {
+    const response = await fetch('index-slider.html');
+    const html = await response.text();
+    
+    // Preload all images before showing content
+    await preloadSliderImages(html);
+    
+    // Insert content after images are loaded
+    document.getElementById('slider-container').innerHTML = html;
+    
+    // Small delay to ensure DOM is ready, especially on iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const delay = isIOS ? 150 : 50;
+    
+    setTimeout(() => {
       applyCustomImageProperties();
       applySliderMaxHeights();
       initializeSlider();
-    })
-    .catch(error => {
-      console.error('Error loading slider:', error);
-    });
+    }, delay);
+    
+  } catch (error) {
+    console.error('Error loading slider:', error);
+    // Show error state
+    document.getElementById('slider-container').innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">Unable to load slider content</div>';
+  }
 }
 
 // Function to apply custom image and text properties from data attributes
@@ -256,27 +306,40 @@ function equalizeSlideHeights() {
 
 // Function to initialize Glide.js slider
 function initializeSlider() {
+  const sliderElement = document.querySelector('.hero-slider');
+  if (!sliderElement) {
+    console.error('Slider element not found');
+    return;
+  }
+  
   const glide = new Glide('.hero-slider', {
     type: 'carousel',
     startAt: 0,
     perView: 1,
-    autoplay: 4000
+    autoplay: 4000,
+    animationDuration: 600
   }); 
   
   glide.mount();
   
-  // Equalize heights and adjust image sizing after mounting
+  // Give extra time for iOS Safari and slower devices
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const adjustmentDelay = isIOS ? 200 : 100;
+  
+  // Initial height adjustment after mounting
   setTimeout(() => {
     adjustImageSizesForMaxHeight();
     equalizeSlideHeights();
-  }, 100);
+  }, adjustmentDelay);
   
-  // Re-equalize and re-adjust on window resize
+  // Debounced resize handler for better performance
+  let resizeTimeout;
   window.addEventListener('resize', () => {
-    setTimeout(() => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
       adjustImageSizesForMaxHeight();
       equalizeSlideHeights();
-    }, 100);
+    }, 200);
   });
 }
 
