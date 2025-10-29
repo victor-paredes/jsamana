@@ -327,12 +327,12 @@
   padding: var(--gb-googlemap-space-sm) var(--gb-googlemap-space-sm);
   border: var(--gb-googlemap-border-thin) solid var(--gb-googlemap-border-light);
   border-radius: var(--gb-googlemap-radius-md);
-  font-size: var(--gb-googlemap-font-2xl);
+  font-size: 0.8rem;
   background: white;
   cursor: pointer;
   transition: var(--gb-googlemap-transition-fast);
   min-width: 40px;
-  width: 40px;
+  width: 100px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
