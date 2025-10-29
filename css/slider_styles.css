@@ -431,8 +431,14 @@
    MOBILE RESPONSIVE - SLIDE TEXT
    ============================================================================= */
 
+   @media (min-width: 1400px) {
+      .slide-text h2 {
+    font-size: 2.8rem !important;
+  }
+   }
 
 @media (max-width: 1400px) {
+
 
   .slide-image {
   padding-right: 2rem;
@@ -442,8 +448,8 @@
 
    @media (max-width: 900px) {
     .slide-text h2 {
-    font-size: 1.5rem;
-    line-height: 1.7rem;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
   }
     .slide-text p {
     font-size: 0.9rem;
@@ -502,10 +508,3 @@
 
 }
 
-/* Widest screens: >900px - Larger h2 text for slides */
-@media (min-width: 901px) {
-  .slide-text h2 {
-    font-size: 2.3rem;
-    line-height: 2.8rem;
-  }
-}
